@@ -44,20 +44,6 @@
             padding: 40px 20px;
         }
 
-        /* Abstract Glow Circles */
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--primary-color);
-            filter: blur(150px);
-            border-radius: 50%;
-            top: 10%;
-            left: 10%;
-            opacity: 0.2;
-        }
-
         .main-container {
             position: relative;
             z-index: 2;
@@ -85,12 +71,6 @@
         }
 
         /* Profile Section */
-        .profile-pic-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
         .profile-pic-container img {
             width: 140px;
             height: 140px;
@@ -101,11 +81,7 @@
             background-origin: border-box;
             background-clip: content-box, border-box;
             padding: 5px;
-            transition: 0.5s;
-        }
-
-        .profile-pic-container:hover img {
-            transform: rotate(5deg) scale(1.05);
+            margin-bottom: 20px;
         }
 
         .name {
@@ -114,7 +90,6 @@
             background: linear-gradient(to right, #fff, #00d2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
         }
 
         .tagline {
@@ -125,12 +100,11 @@
             text-transform: uppercase;
         }
 
-        /* Modern Social Buttons */
+        /* Social Buttons */
         .social-links {
             display: flex;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
         }
 
         .social-links a {
@@ -144,31 +118,17 @@
             border-radius: 15px;
             text-decoration: none;
             font-size: 20px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             border: 1px solid var(--border-glass);
         }
 
         .social-links a:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             background: var(--primary-color);
             color: #000;
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
         }
 
-        /* Comment Section Styles */
-        .comment-section h3 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #f8fafc;
-            text-align: left;
-            border-left: 4px solid var(--primary-color);
-            padding-left: 15px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
+        /* Comment Section */
         input, textarea {
             width: 100%;
             padding: 15px;
@@ -176,14 +136,8 @@
             border: 1px solid var(--border-glass);
             border-radius: 15px;
             color: white;
-            font-family: inherit;
+            margin-bottom: 15px;
             outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            background: rgba(0, 0, 0, 0.4);
         }
 
         .post-btn {
@@ -192,124 +146,160 @@
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border: none;
             border-radius: 15px;
-            color: #000;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
-            display: flex;
+            color: #000;
+        }
+
+        /* --- Mood Popup Styling --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none; /* শুরুতে লুকানো থাকবে */
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            z-index: 9999;
         }
 
-        .post-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+        .modal-content {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid var(--primary-color);
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .comment-display {
-            margin-top: 30px;
-            max-height: 250px;
-            overflow-y: auto;
-            text-align: left;
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .comment-display::-webkit-scrollbar { width: 5px; }
-        .comment-display::-webkit-scrollbar-thumb { background: var(--border-glass); border-radius: 10px; }
-
-        .single-comment {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-glass);
-            animation: slideIn 0.4s ease-out;
+        .modal-content h2 {
+            margin-bottom: 25px;
+            font-size: 22px;
+            color: #fff;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
+        .mood-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .single-comment strong {
-            color: var(--primary-color);
-            display: block;
-            font-size: 15px;
-            margin-bottom: 5px;
+        .mood-btn {
+            padding: 12px;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            background: var(--glass-bg);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .single-comment p {
-            font-size: 14px;
-            color: #cbd5e1;
+        .mood-btn:hover {
+            background: var(--primary-color);
+            color: #000;
+            font-weight: 600;
+            transform: translateX(10px);
         }
+
+        .mood-btn.excellent:hover { background: #00ff88; }
+        .mood-btn.good:hover { background: #00d2ff; }
+        .mood-btn.bad:hover { background: #ff4b2b; }
+
     </style>
 </head>
 <body>
+
+    <!-- Mood Popup Modal -->
+    <div class="modal-overlay" id="moodModal">
+        <div class="modal-content">
+            <h2>How is your mood today?</h2>
+            <div class="mood-options">
+                <button class="mood-btn excellent" onclick="closeModal('Excellent')">🚀 Excellent</button>
+                <button class="mood-btn good" onclick="closeModal('Good')">😊 Good</button>
+                <button class="mood-btn bad" onclick="closeModal('Bad')">😔 Bad</button>
+            </div>
+        </div>
+    </div>
 
     <section class="hero-section">
         <div class="main-container">
             <!-- Profile Card -->
             <div class="glass-card">
                 <div class="profile-pic-container">
-                    <!-- আপনার ছবি এখানে দিন -->
                     <img src="https://via.placeholder.com/150" alt="Profile">
                 </div>
-                <h1 class="name">আপনার নাম এখানে</h1>
+                <h1 class="name">আপনার নাম</h1>
                 <p class="tagline">Professional Freelancer</p>
 
                 <div class="social-links">
-                    <!-- লিঙ্কগুলো নিচে পরিবর্তন করুন -->
-                    <a href="আপনার_ফেসবুক_লিঙ্ক_এখানে" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://wa.me/আপনার_হোয়াটসঅ্যাপ_নাম্বার" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="আপনার_ইনস্টাগ্রাম_লিঙ্ক_এখানে" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://t.me/আপনার_ইউজারনেম" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="লিঙ্ক_এখানে" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/নাম্বার_এখানে" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="লিঙ্ক_এখানে" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://t.me/ইউজারনেম_এখানে" target="_blank"><i class="fab fa-telegram-plane"></i></a>
                 </div>
             </div>
 
             <!-- Comment Section -->
             <div class="glass-card">
-                <div class="comment-section">
-                    <h3>Contact & Messages</h3>
-                    <div class="input-group">
-                        <input type="text" id="userName" placeholder="Your Name">
-                    </div>
-                    <div class="input-group">
-                        <textarea id="userComment" placeholder="Write something professional..." rows="3"></textarea>
-                    </div>
-                    <button id="submitBtn" class="post-btn">
-                        Post Message <i class="fas fa-paper-plane"></i>
-                    </button>
-
-                    <div id="commentDisplay" class="comment-display">
-                        <!-- Comments will appear here -->
-                    </div>
-                </div>
+                <h3>Leave a Message</h3>
+                <input type="text" id="userName" placeholder="Your Name">
+                <textarea id="userComment" placeholder="Write something..." rows="3"></textarea>
+                <button id="submitBtn" class="post-btn">Post Message</button>
+                <div id="commentDisplay" style="margin-top: 20px; text-align: left;"></div>
             </div>
         </div>
     </section>
 
     <script>
+        // ২ সেকেন্ড পর পপআপ দেখানোর লজিক
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('moodModal').style.display = 'flex';
+            }, 2000); 
+        };
+
+        // পপআপ বন্ধ করার লজিক
+        function closeModal(mood) {
+            document.getElementById('moodModal').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('moodModal').style.display = 'none';
+                if(mood === 'Bad') {
+                    alert("I hope your day gets better! Stay positive. ❤️");
+                } else {
+                    alert("Glad to hear that you are having a " + mood + " day! ✨");
+                }
+            }, 300);
+        }
+
+        // কমেন্ট সেকশন লজিক
         document.getElementById('submitBtn').addEventListener('click', function() {
-            const nameInput = document.getElementById('userName');
-            const commentInput = document.getElementById('userComment');
-            const displayArea = document.getElementById('commentDisplay');
+            const name = document.getElementById('userName').value;
+            const comment = document.getElementById('userComment').value;
+            const display = document.getElementById('commentDisplay');
 
-            if (nameInput.value.trim() !== "" && commentInput.value.trim() !== "") {
-                const newComment = document.createElement('div');
-                newComment.classList.add('single-comment');
-                
-                newComment.innerHTML = `
-                    <strong><i class="fas fa-user-circle"></i> ${nameInput.value}</strong>
-                    <p>${commentInput.value}</p>
-                `;
-                
-                displayArea.prepend(newComment);
-
-                nameInput.value = '';
-                commentInput.value = '';
-            } else {
-                alert("দয়া করে নাম এবং মেসেজ দুটোই লিখুন।");
+            if (name && comment) {
+                const div = document.createElement('div');
+                div.style.background = "rgba(255,255,255,0.05)";
+                div.style.padding = "10px";
+                div.style.borderRadius = "10px";
+                div.style.marginBottom = "10px";
+                div.innerHTML = `<strong>${name}</strong><p style="font-size: 14px; color: #ccc;">${comment}</p>`;
+                display.prepend(div);
+                document.getElementById('userName').value = '';
+                document.getElementById('userComment').value = '';
             }
         });
     </script>
