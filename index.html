@@ -306,3 +306,212 @@
 
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Profile & Stories</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00d2ff;
+            --accent-color: #3a7bd5;
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            padding: 50px 20px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; } }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Profile Styles */
+        .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--primary-color); margin-bottom: 15px; }
+        .name { font-size: 28px; background: linear-gradient(to right, #fff, var(--primary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { font-size: 13px; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+
+        /* Social Icons */
+        .social-links { display: flex; justify-content: center; gap: 15px; }
+        .social-links a { width: 45px; height: 45px; background: var(--glass-bg); color: white; display: flex; align-items: center; justify-content: center; border-radius: 12px; text-decoration: none; transition: 0.3s; border: 1px solid var(--border-glass); }
+        .social-links a:hover { background: var(--primary-color); color: #000; transform: translateY(-5px); }
+
+        /* Mood Popup */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #1e293b; padding: 40px; border-radius: 30px; text-align: center; border: 1px solid var(--primary-color); width: 90%; max-width: 400px; }
+        .mood-btn { width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .excellent { background: #00ff88; } .good { background: #00d2ff; } .bad { background: #ff4b2b; color: white; }
+
+        /* Story Section */
+        .story-section h2 { font-size: 22px; margin-bottom: 10px; color: var(--primary-color); }
+        .story-section p.desc { font-size: 14px; color: #cbd5e1; margin-bottom: 20px; }
+        
+        input, textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 15px; color: white; margin-bottom: 15px; outline: none; font-family: inherit; }
+        input:focus, textarea:focus { border-color: var(--primary-color); }
+
+        .submit-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border: none; border-radius: 15px; color: #000; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { transform: scale(1.02); opacity: 0.9; }
+
+        /* Shared Stories Feed */
+        .story-feed { margin-top: 30px; text-align: left; }
+        .single-story { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary-color); margin-bottom: 15px; position: relative; animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .single-story h4 { color: var(--primary-color); font-size: 16px; margin-bottom: 5px; }
+        .single-story p { font-size: 14px; color: #e2e8f0; white-space: pre-wrap; }
+        
+        /* Delete Button for Admin */
+        .delete-btn { position: absolute; top: 15px; right: 15px; background: rgba(255, 75, 43, 0.2); color: #ff4b2b; border: 1px solid #ff4b2b; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .delete-btn:hover { background: #ff4b2b; color: white; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Mood Popup -->
+    <div class="modal-overlay" id="moodModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">How is your mood today?</h2>
+            <button class="mood-btn excellent" onclick="closeMood('Excellent')">🚀 Excellent</button>
+            <button class="mood-btn good" onclick="closeMood('Good')">😊 Good</button>
+            <button class="mood-btn bad" onclick="closeMood('Bad')">😔 Bad</button>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="main-container">
+            
+            <!-- Profile Card -->
+            <div class="glass-card">
+                <img src="https://via.placeholder.com/150" alt="Profile" class="profile-img">
+                <h1 class="name">Your Name Here</h1>
+                <p class="tagline">Professional Freelancer</p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+
+            <!-- Story Sharing Section -->
+            <div class="glass-card story-section">
+                <h2>Share Your Life Story</h2>
+                <p class="desc">You are welcome to share a beautiful moment, an inspiring story, or even a sad memory from your life. Let's hear from you!</p>
+                
+                <input type="text" id="storyName" placeholder="Your Name">
+                <textarea id="storyText" rows="4" placeholder="Write your story here..."></textarea>
+                <button class="submit-btn" onclick="postStory()">Post Story</button>
+
+                <!-- Stories will appear here -->
+                <div id="storyFeed" class="story-feed"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Mood Popup Logic
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('moodModal').style.display = 'flex';
+            }, 2000);
+        };
+
+        function closeMood(mood) {
+            document.getElementById('moodModal').style.display = 'none';
+            alert("Thanks! I'm glad you're feeling " + mood);
+        }
+
+        // Story Posting Logic
+        function postStory() {
+            const nameInput = document.getElementById('storyName');
+            const storyInput = document.getElementById('storyText');
+            const feed = document.getElementById('storyFeed');
+
+            if (nameInput.value.trim() === "" || storyInput.value.trim() === "") {
+                alert("Please enter both your name and your story.");
+                return;
+            }
+
+            // Create story element
+            const storyId = Date.now(); // Unique ID for each story
+            const storyDiv = document.createElement('div');
+            storyDiv.className = 'single-story';
+            storyDiv.setAttribute('data-id', storyId);
+
+            storyDiv.innerHTML = `
+                <h4><i class="fas fa-user-edit"></i> ${nameInput.value}</h4>
+                <p>${storyInput.value}</p>
+                <button class="delete-btn" onclick="deleteStory(${storyId})">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            `;
+
+            feed.prepend(storyDiv);
+
+            // Clear inputs
+            nameInput.value = "";
+            storyInput.value = "";
+        }
+
+        // Admin Delete Logic
+        function deleteStory(id) {
+            // সিম্পল সিকিউরিটির জন্য একটি পাসওয়ার্ড অপশন রাখা যেতে পারে
+            const password = prompt("Admin, enter password to delete this story:");
+            if (password === "1234") { // আপনি এখানে আপনার পাসওয়ার্ড সেট করতে পারেন
+                const storyToDelete = document.querySelector(`[data-id="${id}"]`);
+                storyToDelete.style.opacity = "0";
+                storyToDelete.style.transform = "translateX(50px)";
+                setTimeout(() => {
+                    storyToDelete.remove();
+                }, 300);
+            } else {
+                alert("Wrong password! You cannot delete this.");
+            }
+        }
+    </script>
+
+</body>
+</html>
