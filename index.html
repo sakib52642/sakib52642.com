@@ -47,6 +47,27 @@
             border-radius: 12px; color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
 
+        /* --- If You're Lost Section --- */
+        .lost-container { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border); }
+        .lost-btn {
+            background: transparent; border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 20px; border-radius: 30px; font-size: 12px; cursor: pointer;
+            transition: 0.3s; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .lost-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--glow); }
+        .lost-btn.pulse { animation: pulseGlow 2s infinite; }
+        
+        #comfortMsg { 
+            display: none; margin-top: 15px; font-size: 15px; font-weight: 300;
+            color: var(--primary); font-style: italic; animation: slideUp 0.5s ease;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0px var(--primary); }
+            50% { box-shadow: 0 0 15px var(--primary); }
+            100% { box-shadow: 0 0 0px var(--primary); }
+        }
+
         /* --- Improved Book Section --- */
         .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 10px; text-align: left;}
         .book-card { 
@@ -105,10 +126,17 @@
                 <img src="https://t.me/i/userpic/320/sakib_xragnar.jpg" alt="NZ Sakib" class="profile-img">
                 <h1>Nazmus Sakib</h1>
                 <p style="color:var(--text-dim); font-size: 11px; margin-top:5px;">Think Possible — Turning Ideas into Reality.</p>
+                
                 <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px;">
                     <a href="https://facebook.com/nomore0099567" target="_blank" style="color:var(--text-dim); font-size: 20px;"><i class="fab fa-facebook"></i></a>
                     <a href="https://t.me/sakib_xragnar" target="_blank" style="color:var(--text-dim); font-size: 20px;"><i class="fab fa-telegram"></i></a>
                     <a href="https://wa.me/8801771783048" target="_blank" style="color:var(--text-dim); font-size: 20px;"><i class="fab fa-whatsapp"></i></a>
+                </div>
+
+                <!-- If You're Lost Button -->
+                <div class="lost-container">
+                    <button id="lostBtn" class="lost-btn" onclick="toggleLost()">If you're lost...</button>
+                    <div id="comfortMsg">“You’re not behind. You’re just loading. ✨”</div>
                 </div>
             </div>
 
@@ -177,6 +205,19 @@
     <script>
         const BOT_TOKEN = '8352894646:AAEdb1CxUL7ZyW_479SNRSiawDXY9_chHYA';
         const CHAT_ID = '7891757103';
+
+        // --- If You're Lost Logic ---
+        function toggleLost() {
+            const msg = document.getElementById('comfortMsg');
+            const btn = document.getElementById('lostBtn');
+            if (msg.style.display === 'block') {
+                msg.style.display = 'none';
+                btn.innerText = "If you're lost...";
+            } else {
+                msg.style.display = 'block';
+                btn.innerText = "Close Guidance";
+            }
+        }
 
         // --- Realistic Book Database ---
         const famous = [
@@ -280,17 +321,27 @@
 
         // --- Telegram & Mood ---
         window.onload = () => { setTimeout(() => { document.getElementById('moodModal').style.display='flex'; }, 1000); };
+        
         function applyMood(m) {
             document.body.className = 'theme-' + m;
             document.getElementById('q1').style.display='none';
             document.getElementById('q2').style.display='block';
             document.getElementById('moodAsk').innerText = m === 'bad' ? "What's wrong?" : "What's on your mind?";
+            
+            // Highlight lost button if mood is bad
+            if(m === 'bad') {
+                document.getElementById('lostBtn').classList.add('pulse');
+            } else {
+                document.getElementById('lostBtn').classList.remove('pulse');
+            }
         }
+
         function closePopup() {
             const t = document.getElementById('moodInput').value;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=Mood Thought: ${t}`);
             document.getElementById('moodModal').style.display='none';
         }
+
         function postMsg() {
             const n = document.getElementById('usrName').value;
             const m = document.getElementById('usrText').value;
