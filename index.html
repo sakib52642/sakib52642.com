@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Profile | Hijibiji Newspaper Background</title>
+    <title>NZ Sakib | Elite Portfolio</title>
     <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Hind+Siliguri:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
             --border: rgba(255, 255, 255, 0.1); --glow: rgba(0, 210, 255, 0.2);
         }
 
-        /* Themes */
+        /* Dynamic Themes */
         body.theme-excellent { --bg-color: #0a0904; --primary: #d4af37; --glow: rgba(212, 175, 55, 0.2); }
         body.theme-good { --bg-color: #040a0a; --primary: #00f2fe; --glow: rgba(0, 242, 254, 0.2); }
         body.theme-bad { --bg-color: #0d0d0d; --primary: #e2e8f0; --glow: rgba(255, 255, 255, 0.05); }
@@ -25,31 +25,13 @@
 
         /* --- Newspaper Hijibiji Background --- */
         #newspaper-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.12; /* উক্তিগুলোর ঝাপসা ভাব */
-            pointer-events: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            font-family: 'Special Elite', serif;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            opacity: 0.12; pointer-events: none; display: flex; flex-wrap: wrap;
+            gap: 20px; padding: 20px; font-family: 'Special Elite', serif;
         }
+        .bg-quote { font-size: 13px; width: 220px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px; color: #fff; line-height: 1.3; }
 
-        .bg-quote {
-            font-size: 13px;
-            width: 220px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 5px;
-            color: #fff;
-            line-height: 1.3;
-        }
-
-        /* --- UI Components (As you liked) --- */
+        /* --- UI Elements --- */
         .hero-section { display: flex; flex-direction: column; align-items: center; padding: 50px 20px; }
         .main-container { width: 100%; max-width: 600px; }
 
@@ -58,34 +40,38 @@
             padding: 30px; border: 1px solid var(--border); margin-bottom: 25px; text-align: center;
         }
 
-        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--primary); padding: 5px; margin-bottom: 15px; box-shadow: 0 0 15px var(--glow); }
-        
-        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        /* Profile Pic with Glow */
+        .profile-img { 
+            width: 120px; height: 120px; border-radius: 50%; 
+            border: 3px solid var(--primary); padding: 5px; 
+            margin-bottom: 15px; box-shadow: 0 0 20px var(--glow);
+            object-fit: cover;
+        }
+
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
         .social-links a { 
             color: var(--text-dim); font-size: 20px; transition: 0.3s; 
-            width: 40px; height: 40px; display: flex; align-items: center; 
+            width: 45px; height: 45px; display: flex; align-items: center; 
             justify-content: center; border-radius: 50%; border: 1px solid var(--border); 
-            text-decoration: none; 
+            background: rgba(255,255,255,0.05);
         }
-        .social-links a:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
+        .social-links a:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-5px); }
 
+        /* Inputs & Buttons */
         h3 { font-size: 19px; margin-bottom: 15px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 12px; text-align: left;}
         input, textarea { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 12px; font-family: inherit;}
         .submit-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 12px; color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; }
 
-        /* Library Grid */
-        .search-box { width: 100%; padding: 12px 20px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 50px; color: white; margin-bottom: 20px; text-align: center; }
-        .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .book-card { background: rgba(255, 255, 255, 0.02); border-radius: 15px; padding: 15px; border: 1px solid var(--border); display: flex; flex-direction: column; text-align: left; transition: 0.3s; }
-        .book-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .book-title { font-size: 13px; font-weight: 600; min-height: 35px; margin-bottom: 5px; color: #fff; }
+        /* Library Search */
+        .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .book-card { background: rgba(255, 255, 255, 0.02); border-radius: 15px; padding: 15px; border: 1px solid var(--border); text-align: left; display: flex; flex-direction: column; }
         .read-btn { padding: 8px; border: 1px solid var(--primary); color: var(--primary); text-align: center; border-radius: 8px; text-decoration: none; font-size: 11px; font-weight: 600; margin-top: auto; }
         .read-btn:hover { background: var(--primary); color: #000; }
 
         /* Modal */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal-content { background: #111; padding: 35px; border-radius: 25px; border: 1px solid var(--primary); width: 90%; max-width: 400px; text-align: center; }
-        .m-btn { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid var(--border); border-radius: 10px; background: rgba(255, 255, 255, 0.03); color: white; cursor: pointer; }
+        .m-btn { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid var(--border); border-radius: 12px; background: rgba(255, 255, 255, 0.03); color: white; cursor: pointer; }
     </style>
 </head>
 <body id="mainBody">
@@ -114,11 +100,13 @@
     <section class="hero-section">
         <div class="main-container">
             
-            <!-- 1. Profile -->
+            <!-- 1. Profile Card -->
             <div class="glass-card">
-                <img src="https://via.placeholder.com/150" class="profile-img">
-                <h1 style="font-size: 28px;">Nazmus Sakib</h1>
-                <p style="color:var(--text-dim); font-size: 12px; letter-spacing: 2px;">Think Possible — believe beyond limits and turn ideas into reality.</p>
+                <!-- আপনার টেলিগ্রাম ফটো লিঙ্ক -->
+                <img src="https://t.me/i/userpic/320/sakib_xragnar.jpg" alt="NZ Sakib" class="profile-img">
+                <h1 style="font-size: 28px;">NZ Sakib</h1>
+                <p style="color:var(--text-dim); font-size: 12px; letter-spacing: 2px;">CREATIVE PROFESSIONAL</p>
+                
                 <div class="social-links">
                     <a href="https://www.facebook.com/nomore0099567" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://wa.me/8801771783048" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -129,35 +117,32 @@
 
             <!-- 2. Story Section -->
             <div class="glass-card">
-                <h3>Post Message or Story</h3>
+                <h3>Share Message or Story</h3>
                 <input type="text" id="usrName" placeholder="Your Name">
-                <textarea id="usrText" rows="3" placeholder="Share a memoir or message..."></textarea>
+                <textarea id="usrText" rows="3" placeholder="Write a memory or message..."></textarea>
                 <button class="submit-btn" onclick="postStory()">Post & Notify Admin</button>
                 <div id="storyFeed" style="margin-top: 20px; text-align: left;"></div>
             </div>
 
-            <!-- 3. Library Section -->
+            <!-- 3. Digital Library -->
             <div class="glass-card" style="text-align: center;">
                 <h3>Digital Library</h3>
-                <input type="text" id="bookSearch" class="search-box" placeholder="Search book or author..." onkeyup="filterBooks()">
+                <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 15px;">Search and Read Online</p>
                 <div id="bookGrid" class="book-grid"></div>
-                <button id="loadMoreBtn" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-top:15px; font-weight:600;" onclick="loadMore()">Load More Books</button>
             </div>
 
         </div>
     </section>
 
     <script>
-        // --- Newspaper Hijibiji Background Logic ---
+        // --- Newspaper Hijibiji Background ---
         const quotes = [
             "মেঘ দেখে কেউ করিসনে ভয়, আড়ালে তার সূর্য হাসে। - রবীন্দ্রনাথ ঠাকুর",
             "মানুষের কষ্ট দেখাও কষ্টের কাজ। - হুমায়ূন আহমেদ",
             "বিপদে মোরে রক্ষা করো একি নহে মোর প্রার্থনা। - রবীন্দ্রনাথ ঠাকুর",
-            "হাল ছেড়ো না বন্ধু বরং কণ্ঠ ছাড়ো জোরে। - কবির সুমন",
             "সাফল্য মানেই বারবার ব্যর্থ হওয়ার পরেও উৎসাহ না হারানো। - উইনস্টন চার্চিল",
-            "The only way to do great work is to love what you do. - Steve Jobs",
+            "To be, or not to be, that is the question. - Shakespeare",
             "গাহি সাম্যের গান, মানুষের চেয়ে বড় কিছু নাই। - কাজী নজরুল ইসলাম",
-            "Believe in yourself and all that you are. - Christian Larson",
             "মানুষ মরে গেলে পচে যায়, বেঁচে থাকলে বদলায়। - হুমায়ূন আহমেদ",
             "Dream big and dare to fail. - Norman Vaughan"
         ];
@@ -168,7 +153,6 @@
             div.className = 'bg-quote';
             div.innerText = quotes[Math.floor(Math.random() * quotes.length)];
             div.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-            div.style.fontSize = (Math.random() * (16 - 12) + 12) + 'px';
             bg.appendChild(div);
         }
 
@@ -192,7 +176,7 @@
                 div.innerHTML = `<h4 style="color:var(--primary); font-size:13px;">${name}</h4><p style="font-size:12px;">${text}</p>`;
                 document.getElementById('storyFeed').prepend(div);
                 document.getElementById('usrName').value = ''; document.getElementById('usrText').value = '';
-                alert("Message Sent!");
+                alert("Message Sent to NZ Sakib's Telegram!");
             }
         }
 
@@ -201,7 +185,8 @@
         function applyMood(mood) {
             currentMood = mood;
             document.body.className = 'theme-' + mood;
-            document.getElementById('q1').style.display = 'none'; document.getElementById('q2').style.display = 'block';
+            document.getElementById('q1').style.display = 'none';
+            document.getElementById('q2').style.display = 'block';
             document.getElementById('moodAsk').innerText = (mood === 'bad') ? "Why are you sad today?" : "What's on your mind?";
         }
         function closePopup() {
@@ -210,30 +195,19 @@
             document.getElementById('moodModal').style.display = 'none';
         }
 
-        // --- Library ---
-        const booksData = [
-            { title: "Atomic Habits", author: "James Clear" },
-            { title: "The Alchemist", author: "Paulo Coelho" },
+        // --- Library Section ---
+        const books = [
             { title: "শেষের কবিতা", author: "রবীন্দ্রনাথ ঠাকুর" },
-            { title: "হিমুর দ্বিতীয় প্রহর", author: "হুমায়ূন আহমেদ" }
+            { title: "দেবদাস", author: "শরৎচন্দ্র চট্টোপাধ্যায়" },
+            { title: "দারুচিনি দ্বীপ", author: "হুমায়ূন আহমেদ" },
+            { title: "Atomic Habits", author: "James Clear" }
         ];
-        for(let i=1; i<=20; i++) { booksData.push({ title: `Classic Book Vol ${i}`, author: "Famous Writer" }); }
 
-        let visibleCount = 4;
-        function renderBooks(data) {
-            const grid = document.getElementById('bookGrid'); grid.innerHTML = "";
-            data.slice(0, visibleCount).forEach(book => {
-                const searchLink = `https://archive.org/search.php?query=${encodeURIComponent(book.title + " pdf")}`;
-                grid.innerHTML += `<div class="book-card"><p class="book-title">${book.title}</p><p style="font-size:10px; color:var(--text-dim);">${book.author}</p><a href="${searchLink}" target="_blank" class="read-btn">Read Online</a></div>`;
-            });
-        }
-        function loadMore() { visibleCount += 6; renderBooks(booksData); }
-        function filterBooks() {
-            const query = document.getElementById('bookSearch').value.toLowerCase();
-            const filtered = booksData.filter(b => b.title.toLowerCase().includes(query));
-            renderBooks(filtered);
-        }
-        renderBooks(booksData);
+        const grid = document.getElementById('bookGrid');
+        books.forEach(book => {
+            const searchLink = `https://archive.org/search.php?query=${encodeURIComponent(book.title + " " + book.author + " pdf")}`;
+            grid.innerHTML += `<div class="book-card"><p style="font-size:13px; font-weight:600;">${book.title}</p><p style="font-size:10px; color:var(--text-dim);">${book.author}</p><a href="${searchLink}" target="_blank" class="read-btn">Read Online</a></div>`;
+        });
     </script>
 </body>
 </html>
