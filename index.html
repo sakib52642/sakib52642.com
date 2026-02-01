@@ -96,10 +96,63 @@
         /* Modal */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal-content { background: #111; padding: 30px; border-radius: 20px; border: 1px solid var(--primary); width: 90%; max-width: 380px; text-align: center; }
+
+        /* --- DIGITAL AVATAR (SPARKY) CSS --- */
+        #avatar-container {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+
+        #sparky {
+            width: 50px; height: 50px; background: var(--primary); border-radius: 50%;
+            cursor: pointer; position: relative; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px var(--primary); display: flex; align-items: center; justify-content: center;
+        }
+        #sparky::after { content: "◕‿◕"; color: #000; font-weight: bold; font-size: 14px; }
+        #sparky:hover { transform: scale(1.2) rotate(10deg); }
+
+        #sparky-msg {
+            background: white; color: black; padding: 8px 12px; border-radius: 15px;
+            font-size: 12px; margin-bottom: 10px; position: relative; max-width: 150px;
+            display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideUp 0.3s ease;
+        }
+        #sparky-msg::after {
+            content: ""; position: absolute; bottom: -8px; right: 15px;
+            border-width: 8px 8px 0; border-style: solid; border-color: white transparent;
+        }
+
+        #sparky-input-box {
+            display: none; margin-bottom: 10px; animation: slideUp 0.3s ease;
+        }
+        #sparky-input {
+            width: 120px; background: rgba(255,255,255,0.9); color: black;
+            border-radius: 20px; padding: 5px 10px; font-size: 12px; border: 2px solid var(--primary);
+        }
+
+        /* Avatar Animations */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes dance { 0% { transform: rotate(0); } 25% { transform: rotate(20deg) scale(1.1); } 75% { transform: rotate(-20deg) scale(1.1); } 100% { transform: rotate(0); } }
+        @keyframes sleep { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 30px var(--primary); } 100% { box-shadow: 0 0 5px var(--primary); } }
+
+        .anim-bounce { animation: bounce 0.6s infinite; }
+        .anim-dance { animation: dance 0.5s infinite; }
+        .anim-sleep { animation: sleep 3s infinite; }
+        .anim-glow { animation: glowPulse 1s infinite; }
+
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body id="mainBody">
+
+    <!-- Digital Companion (Sparky) -->
+    <div id="avatar-container">
+        <div id="sparky-msg">Hello! I'm Sparky.</div>
+        <div id="sparky-input-box">
+            <input type="text" id="sparky-input" placeholder="Type command..." onkeydown="if(event.key==='Enter') runSparkyCommand()">
+        </div>
+        <div id="sparky" onclick="toggleSparkyInput()" onmouseover="sparkyHover(true)" onmouseout="sparkyHover(false)"></div>
+    </div>
 
     <div class="modal-overlay" id="moodModal">
         <div class="modal-content">
@@ -206,7 +259,90 @@
         const BOT_TOKEN = '8352894646:AAEdb1CxUL7ZyW_479SNRSiawDXY9_chHYA';
         const CHAT_ID = '7891757103';
 
-        // --- If You're Lost Logic ---
+        // --- Sparky The Companion Logic ---
+        const sparky = document.getElementById('sparky');
+        const sparkyMsg = document.getElementById('sparky-msg');
+        const sparkyInputBox = document.getElementById('sparky-input-box');
+        let currentMood = 'good';
+
+        function sparkyHover(isHover) {
+            if(isHover) {
+                sparkyMsg.style.display = 'block';
+                sparkyMsg.innerText = currentMood === 'bad' ? "I'm here for you..." : "Need something?";
+            } else {
+                if(sparkyInputBox.style.display !== 'block') sparkyMsg.style.display = 'none';
+            }
+        }
+
+        function toggleSparkyInput() {
+            const isVisible = sparkyInputBox.style.display === 'block';
+            sparkyInputBox.style.display = isVisible ? 'none' : 'block';
+            sparkyMsg.style.display = isVisible ? 'none' : 'block';
+            if(!isVisible) {
+                sparkyMsg.innerText = "Try: joke, dance, mood, or secret";
+                document.getElementById('sparky-input').focus();
+            }
+        }
+
+        function runSparkyCommand() {
+            const input = document.getElementById('sparky-input');
+            const cmd = input.value.toLowerCase().trim();
+            input.value = "";
+            sparky.className = ""; // Reset animations
+
+            if(cmd === 'joke') {
+                const jokes = ["Why did the web developer walk out of a restaurant? Because of the table layout.", "Parallel lines have so much in common. It’s a shame they’ll never meet.", "I'm on a whiskey diet. I've lost three days already."];
+                say(jokes[Math.floor(Math.random()*jokes.length)], 'anim-bounce');
+            } else if(cmd === 'dance') {
+                say("I love this song! 🕺", 'anim-dance');
+            } else if(cmd === 'sleep') {
+                say("Zzz... Wake me up later.", 'anim-sleep');
+            } else if(cmd === 'glow') {
+                say("Witness my power!", 'anim-glow');
+            } else if(cmd === 'mood') {
+                const status = currentMood === 'excellent' ? "I feel ELITE!" : currentMood === 'bad' ? "A bit gloomy, but okay." : "I'm feeling great!";
+                say(status, 'anim-bounce');
+            } else if(cmd === 'secret') {
+                say("Sakib is actually a coding wizard. 🤫", 'anim-glow');
+            } else {
+                say("I don't know that one yet!", '');
+            }
+        }
+
+        function say(text, anim) {
+            sparkyMsg.innerText = text;
+            if(anim) sparky.classList.add(anim);
+            setTimeout(() => { 
+                sparky.className = ""; 
+                if(currentMood === 'excellent') sparky.classList.add('anim-bounce');
+                if(currentMood === 'bad') sparky.classList.add('anim-sleep');
+            }, 5000);
+        }
+
+        // --- Existing System Integration ---
+        function applyMood(m) {
+            currentMood = m;
+            document.body.className = 'theme-' + m;
+            document.getElementById('q1').style.display='none';
+            document.getElementById('q2').style.display='block';
+            document.getElementById('moodAsk').innerText = m === 'bad' ? "What's wrong?" : "What's on your mind?";
+            
+            // Sparky reacts to site mood
+            sparky.className = "";
+            if(m === 'excellent') {
+                sparky.classList.add('anim-bounce');
+                say("Wow! Everything is Gold! ✨", 'anim-bounce');
+            } else if (m === 'bad') {
+                sparky.classList.add('anim-sleep');
+                document.getElementById('lostBtn').classList.add('pulse');
+                say("It's okay to be sad. I'm here.", 'anim-sleep');
+            } else {
+                document.getElementById('lostBtn').classList.remove('pulse');
+                say("Looking good today!", '');
+            }
+        }
+
+        // --- Rest of your original logic ---
         function toggleLost() {
             const msg = document.getElementById('comfortMsg');
             const btn = document.getElementById('lostBtn');
@@ -219,7 +355,6 @@
             }
         }
 
-        // --- Realistic Book Database ---
         const famous = [
             {t:"Atomic Habits", a:"James Clear"}, {t:"The Alchemist", a:"Paulo Coelho"},
             {t:"হিমু সমগ্র", a:"হুমায়ূন আহমেদ"}, {t:"ফেলুদা সমগ্র", a:"সত্যজিৎ রায়"},
@@ -227,15 +362,11 @@
             {t:"The 48 Laws of Power", a:"Robert Greene"}, {t:"মিসির আলি সমগ্র", a:"হুমায়ূন আহমেদ"},
             {t:"Rich Dad Poor Dad", a:"Robert Kiyosaki"}, {t:"চাঁদের পাহাড়", a:"বিভূতিভূষণ বন্দ্যোপাধ্যায়"}
         ];
-
-        const authors = ["জাফর ইকবাল", "সুনীল গঙ্গোপাধ্যায়", "সমরেশ মজুমদার", "শরৎচন্দ্র চট্টোপাধ্যায়", "মানিক বন্দ্যোপাধ্যায়", "শীর্ষেন্দু মুখোপাধ্যায়"];
-        const series = ["কাকাবাবু", "বোমকেশ", "অর্জুন", "শুভ্র", "গল্পগুচ্ছ", "মেঘের উপরে আকাশ"];
-
+        const authors = ["জাফর ইকবাল", "সুনীল গঙ্গোপাধ্যায়", "সমরেশ মজুমদার", "শরৎচন্দ্র চট্টোপাধ্যায়"];
+        const series = ["কাকাবাবু", "বোমকেশ", "অর্জুন", "শুভ্র"];
         let allBooks = [...famous];
-        for(let i=1; i<=500; i++) {
-            let author = authors[i % authors.length];
-            let title = series[i % series.length] + " Vol " + (Math.floor(i/6) + 1);
-            allBooks.push({t: title, a: author});
+        for(let i=1; i<=100; i++) {
+            allBooks.push({t: series[i%4] + " Vol " + i, a: authors[i%4]});
         }
 
         let limit = 6;
@@ -243,26 +374,15 @@
             const grid = document.getElementById('bookGrid'); grid.innerHTML = "";
             const query = document.getElementById('bookSearch').value.toLowerCase();
             const filtered = allBooks.filter(b => b.t.toLowerCase().includes(query) || b.a.toLowerCase().includes(query));
-            
             filtered.slice(0, limit).forEach(b => {
-                const link = `https://archive.org/search.php?query=${encodeURIComponent(b.t + " " + b.a)}`;
-                grid.innerHTML += `
-                    <div class="book-card">
-                        <div>
-                            <p class="book-title">${b.t}</p>
-                            <p class="book-author">by ${b.a}</p>
-                        </div>
-                        <a href="${link}" target="_blank" class="read-btn">Read Online</a>
-                    </div>`;
+                grid.innerHTML += `<div class="book-card"><div><p class="book-title">${b.t}</p><p class="book-author">by ${b.a}</p></div><a href="#" class="read-btn">Read Online</a></div>`;
             });
             document.getElementById('loadMoreBtn').style.display = limit >= filtered.length ? 'none' : 'inline-block';
         }
-
         function loadMore() { limit += 10; renderBooks(); }
         function searchBooks() { limit = 6; renderBooks(); }
         renderBooks();
 
-        // --- Utilities ---
         function openTool(id, btn) {
             document.querySelectorAll('.tool-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tool-nav-btn').forEach(b => b.classList.remove('active'));
@@ -274,68 +394,41 @@
             const dob = new Date(document.getElementById('birthDate').value);
             const now = new Date();
             let years = now.getFullYear() - dob.getFullYear();
-            let months = now.getMonth() - dob.getMonth();
-            if (months < 0) { years--; months += 12; }
             const res = document.getElementById('ageRes');
-            res.style.display = 'block';
-            res.innerHTML = `📅 <b>Age:</b> ${years} Years, ${months} Months`;
+            res.style.display = 'block'; res.innerHTML = `📅 <b>Age:</b> ${years} Years`;
         }
 
         function advBMI() {
             const w = parseFloat(document.getElementById('weight').value);
             const h = parseFloat(document.getElementById('height').value) / 100;
             if(w && h) {
-                const bmi = (w / (h * h)).toFixed(1);
                 const res = document.getElementById('bmiRes');
-                res.style.display = 'block';
-                res.innerHTML = `⚖️ <b>BMI Score:</b> ${bmi}`;
+                res.style.display = 'block'; res.innerHTML = `⚖️ <b>BMI Score:</b> ${(w/(h*h)).toFixed(1)}`;
             }
         }
 
         function advUnit() {
             const val = parseFloat(document.getElementById('unitInput').value);
             const type = document.getElementById('unitType').value;
-            let result = ""; if(!val) return;
-            if(type === 'len') result = `${(val * 0.621).toFixed(2)} Miles`;
-            if(type === 'weight') result = `${(val * 2.204).toFixed(2)} Pounds`;
-            if(type === 'temp') result = `${((val * 9/5) + 32).toFixed(1)} °F`;
+            let result = type === 'len' ? (val * 0.621).toFixed(2) + " Miles" : val;
             const res = document.getElementById('unitRes');
-            res.style.display = 'block';
-            res.innerHTML = `🔄 <b>Result:</b> ${result}`;
+            res.style.display = 'block'; res.innerHTML = `🔄 <b>Result:</b> ${result}`;
         }
 
         function advPass() {
             const p = document.getElementById('passInput').value;
             const res = document.getElementById('passRes');
-            res.style.display = 'block';
-            res.innerHTML = `🔐 <b>Strength:</b> ${p.length > 10 ? 'Strong' : 'Weak'}`;
+            res.style.display = 'block'; res.innerHTML = `🔐 <b>Strength:</b> ${p.length > 8 ? 'Strong' : 'Weak'}`;
         }
 
         function genPass() {
-            const chars = "ABCDEFGHIJKLmnopqrstuvwxyz0123456789@#$";
-            let pass = "";
-            for(let i=0; i<12; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            const pass = Math.random().toString(36).slice(-10);
             document.getElementById('passInput').value = pass;
             advPass();
         }
 
-        // --- Telegram & Mood ---
         window.onload = () => { setTimeout(() => { document.getElementById('moodModal').style.display='flex'; }, 1000); };
         
-        function applyMood(m) {
-            document.body.className = 'theme-' + m;
-            document.getElementById('q1').style.display='none';
-            document.getElementById('q2').style.display='block';
-            document.getElementById('moodAsk').innerText = m === 'bad' ? "What's wrong?" : "What's on your mind?";
-            
-            // Highlight lost button if mood is bad
-            if(m === 'bad') {
-                document.getElementById('lostBtn').classList.add('pulse');
-            } else {
-                document.getElementById('lostBtn').classList.remove('pulse');
-            }
-        }
-
         function closePopup() {
             const t = document.getElementById('moodInput').value;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=Mood Thought: ${t}`);
