@@ -47,7 +47,6 @@
             border-radius: 12px; color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
 
-        /* --- If You're Lost Section --- */
         .lost-container { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border); }
         .lost-btn {
             background: transparent; border: 1px solid var(--primary); color: var(--primary);
@@ -68,7 +67,6 @@
             100% { box-shadow: 0 0 0px var(--primary); }
         }
 
-        /* --- Improved Book Section --- */
         .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 10px; text-align: left;}
         .book-card { 
             background: rgba(255, 255, 255, 0.03); border-radius: 15px; padding: 15px; 
@@ -85,24 +83,20 @@
         #loadMoreBtn { margin-top: 20px; background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 10px 25px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.3s;}
         #loadMoreBtn:hover { background: var(--primary); color: #000; }
 
-        /* Utility System */
-        .tool-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
-        .tool-nav-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-dim); padding: 10px 5px; border-radius: 12px; cursor: pointer; font-size: 11px; }
+        .tool-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 20px; }
+        .tool-nav-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-dim); padding: 10px 2px; border-radius: 12px; cursor: pointer; font-size: 10px; }
         .tool-nav-btn.active { background: var(--primary); color: #000; font-weight: bold;}
         .tool-content { display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 18px; border-radius: 18px; }
         .tool-content.active { display: block; animation: slideUp 0.3s ease; }
-        .res-box { margin-top: 15px; padding: 10px; background: rgba(0, 210, 255, 0.1); border-radius: 10px; border-left: 3px solid var(--primary); font-size: 13px; display: none; }
+        .res-box { margin-top: 15px; padding: 10px; background: rgba(0, 210, 255, 0.1); border-radius: 10px; border-left: 3px solid var(--primary); font-size: 13px; display: none; position: relative;}
 
-        /* Modal */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal-content { background: #111; padding: 30px; border-radius: 20px; border: 1px solid var(--primary); width: 90%; max-width: 380px; text-align: center; }
 
-        /* --- DIGITAL AVATAR (SPARKY) CSS --- */
         #avatar-container {
             position: fixed; bottom: 20px; right: 20px; z-index: 1000;
             display: flex; flex-direction: column; align-items: flex-end;
         }
-
         #sparky {
             width: 50px; height: 50px; background: var(--primary); border-radius: 50%;
             cursor: pointer; position: relative; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -110,7 +104,6 @@
         }
         #sparky::after { content: "◕‿◕"; color: #000; font-weight: bold; font-size: 14px; }
         #sparky:hover { transform: scale(1.2) rotate(10deg); }
-
         #sparky-msg {
             background: white; color: black; padding: 8px 12px; border-radius: 15px;
             font-size: 12px; margin-bottom: 10px; position: relative; max-width: 150px;
@@ -120,25 +113,20 @@
             content: ""; position: absolute; bottom: -8px; right: 15px;
             border-width: 8px 8px 0; border-style: solid; border-color: white transparent;
         }
-
-        #sparky-input-box {
-            display: none; margin-bottom: 10px; animation: slideUp 0.3s ease;
-        }
+        #sparky-input-box { display: none; margin-bottom: 10px; animation: slideUp 0.3s ease; }
         #sparky-input {
-            width: 120px; background: rgba(255,255,255,0.9); color: black;
+            width: 140px; background: rgba(255,255,255,0.9); color: black;
             border-radius: 20px; padding: 5px 10px; font-size: 12px; border: 2px solid var(--primary);
         }
 
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes dance { 0% { transform: rotate(0); } 25% { transform: rotate(20deg) scale(1.1); } 75% { transform: rotate(-20deg) scale(1.1); } 100% { transform: rotate(0); } }
-        @keyframes sleep { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+        @keyframes sleep { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
         @keyframes glowPulse { 0% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 30px var(--primary); } 100% { box-shadow: 0 0 5px var(--primary); } }
-
         .anim-bounce { animation: bounce 0.6s infinite; }
         .anim-dance { animation: dance 0.5s infinite; }
         .anim-sleep { animation: sleep 3s infinite; }
         .anim-glow { animation: glowPulse 1s infinite; }
-
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -148,11 +136,12 @@
     <div id="avatar-container">
         <div id="sparky-msg">Hello! I'm Sparky.</div>
         <div id="sparky-input-box">
-            <input type="text" id="sparky-input" placeholder="Type command..." onkeydown="if(event.key==='Enter') runSparkyCommand()">
+            <input type="text" id="sparky-input" placeholder="Try: help, joke, time" onkeydown="if(event.key==='Enter') runSparkyCommand()">
         </div>
         <div id="sparky" onclick="toggleSparkyInput()" onmouseover="sparkyHover(true)" onmouseout="sparkyHover(false)"></div>
     </div>
 
+    <!-- Mood Modal -->
     <div class="modal-overlay" id="moodModal">
         <div class="modal-content">
             <div id="q1">
@@ -172,8 +161,7 @@
 
     <section class="hero-section">
         <div class="main-container">
-            
-            <!-- Profile -->
+            <!-- Profile Card -->
             <div class="glass-card">
                 <img src="https://t.me/i/userpic/320/sakib_xragnar.jpg" alt="NZ Sakib" class="profile-img">
                 <h1>Nazmus Sakib</h1>
@@ -200,7 +188,7 @@
                 <div id="msgConfirm" style="font-size: 11px; color: #00ffaa; margin-top: 8px; display: none;">Spark sent successfully! 🚀</div>
             </div>
 
-            <!-- Enhanced Library (UPDATED SECTION) -->
+            <!-- Elite Digital Library -->
             <div class="glass-card">
                 <h3>Elite Digital Library</h3>
                 <p style="font-size: 10px; color: var(--text-dim); text-align: left; margin-bottom: 10px;">Accessing 5,000+ Books (English & Bangla Classics)</p>
@@ -236,26 +224,27 @@
 
                 <div id="unitTool" class="tool-content">
                     <select id="unitType" onchange="advUnit()">
-                        <option value="len">Length (KM to Miles)</option>
-                        <option value="weight">Weight (KG to Pounds)</option>
-                        <option value="temp">Temp (Celsius to Fahr)</option>
+                        <option value="km_m">KM to Miles</option>
+                        <option value="kg_lb">KG to Pounds</option>
+                        <option value="c_f">Celsius to Fahr</option>
+                        <option value="ft_m">Feet to Meters</option>
                     </select>
                     <input type="number" id="unitInput" placeholder="Enter value" oninput="advUnit()">
                     <div id="unitRes" class="res-box"></div>
                 </div>
 
                 <div id="passTool" class="tool-content">
-                    <input type="text" id="passInput" placeholder="Type or Generate" oninput="advPass()">
-                    <button class="submit-btn" style="padding:10px; font-size:11px; background:#333; color:#fff;" onclick="genPass()">Generate Secure Password</button>
+                    <input type="text" id="passInput" placeholder="Generated Password" readonly>
+                    <button class="submit-btn" style="padding:10px; font-size:11px; background:#333; color:#fff;" onclick="genPass()">Generate & Copy Secure Pass</button>
                     <div id="passRes" class="res-box"></div>
                 </div>
             </div>
 
-            <!-- New: Voice Studio (AutoTune) Section -->
+            <!-- Voice Studio Section -->
             <div class="glass-card">
                 <h3>Voice Studio & AI Analyzer</h3>
                 <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px; text-align: left;">
-                    🎤 Voice Analyzer & Recorder / কণ্ঠ বিশ্লেষক  
+                    🎤 Voice Analyzer & Recorder
                     <br>
                     <span style="font-size:11px;">
                         কথা বলুন — AI আপনার সুর বিশ্লেষণ করবে এবং আপনি তা রেকর্ড করে পুনরায় শুনতে পারবেন।
@@ -271,23 +260,25 @@
     </section>
 
     <script>
+        // Config
         const BOT_TOKEN = '8352894646:AAEdb1CxUL7ZyW_479SNRSiawDXY9_chHYA';
         const CHAT_ID = '7891757103';
 
+        // Variables
         let audioCtx, analyser, mic, buffer, raf;
         let smoothPitch = 0;
         let mediaRecorder, chunks = [], audioBlob, audioUrl;
+        let currentMood = 'good';
 
         // --- Sparky The Companion Logic ---
         const sparky = document.getElementById('sparky');
         const sparkyMsg = document.getElementById('sparky-msg');
         const sparkyInputBox = document.getElementById('sparky-input-box');
-        let currentMood = 'good';
 
         function sparkyHover(isHover) {
             if(isHover) {
                 sparkyMsg.style.display = 'block';
-                sparkyMsg.innerText = currentMood === 'bad' ? "I'm here for you..." : "Need something?";
+                sparkyMsg.innerText = currentMood === 'bad' ? "Stay strong..." : "How can I help?";
             } else {
                 if(sparkyInputBox.style.display !== 'block') sparkyMsg.style.display = 'none';
             }
@@ -298,7 +289,7 @@
             sparkyInputBox.style.display = isVisible ? 'none' : 'block';
             sparkyMsg.style.display = isVisible ? 'none' : 'block';
             if(!isVisible) {
-                sparkyMsg.innerText = "Try: joke, dance, mood, or secret";
+                sparkyMsg.innerText = "Commands: joke, time, dance, mood, secret, clear";
                 document.getElementById('sparky-input').focus();
             }
         }
@@ -310,21 +301,27 @@
             sparky.className = ""; 
 
             if(cmd === 'joke') {
-                const jokes = ["Why did the web developer walk out of a restaurant? Because of the table layout.", "Parallel lines have so much in common. It’s a shame they’ll never meet.", "I'm on a whiskey diet. I've lost three days already."];
+                const jokes = ["Why did the developer go broke? Because he used up all his cache.", "Why do programmers prefer dark mode? Because light attracts bugs.", "Hardware: The part of a computer that you can kick."];
                 say(jokes[Math.floor(Math.random()*jokes.length)], 'anim-bounce');
             } else if(cmd === 'dance') {
-                say("I love this song! 🕺", 'anim-dance');
-            } else if(cmd === 'sleep') {
-                say("Zzz... Wake me up later.", 'anim-sleep');
-            } else if(cmd === 'glow') {
-                say("Witness my power!", 'anim-glow');
+                say("I've got the moves! 🕺", 'anim-dance');
+            } else if(cmd === 'time') {
+                say("Current Time: " + new Date().toLocaleTimeString(), 'anim-glow');
+            } else if(cmd === 'date') {
+                say("Today is: " + new Date().toLocaleDateString(), 'anim-glow');
             } else if(cmd === 'mood') {
-                const status = currentMood === 'excellent' ? "I feel ELITE!" : currentMood === 'bad' ? "A bit gloomy, but okay." : "I'm feeling great!";
+                const status = currentMood === 'excellent' ? "I'm in ELITE mode! ✨" : currentMood === 'bad' ? "I'm feeling a bit low." : "I'm doing great!";
                 say(status, 'anim-bounce');
+            } else if(cmd === 'help') {
+                say("Try: joke, time, date, dance, mood, secret, clear", 'anim-bounce');
+            } else if(cmd === 'clear') {
+                say("All clear!", '');
+                sparkyInputBox.style.display = 'none';
+                sparkyMsg.style.display = 'none';
             } else if(cmd === 'secret') {
-                say("Sakib is actually a coding wizard. 🤫", 'anim-glow');
+                say("Sakib is coding right now... 🤫", 'anim-glow');
             } else {
-                say("I don't know that one yet!", '');
+                say("Unknown command. Type 'help'.", '');
             }
         }
 
@@ -335,69 +332,65 @@
                 sparky.className = ""; 
                 if(currentMood === 'excellent') sparky.classList.add('anim-bounce');
                 if(currentMood === 'bad') sparky.classList.add('anim-sleep');
-            }, 5000);
+            }, 4000);
         }
 
+        // --- Mood System ---
         function applyMood(m) {
             currentMood = m;
             document.body.className = 'theme-' + m;
             document.getElementById('q1').style.display='none';
             document.getElementById('q2').style.display='block';
-            document.getElementById('moodAsk').innerText = m === 'bad' ? "What's wrong?" : "What's on your mind?";
+            document.getElementById('moodAsk').innerText = m === 'bad' ? "What's bothering you?" : "What's on your mind?";
             
             sparky.className = "";
             if(m === 'excellent') {
                 sparky.classList.add('anim-bounce');
-                say("Wow! Everything is Gold! ✨", 'anim-bounce');
+                say("Welcome, Elite User! ✨", 'anim-bounce');
             } else if (m === 'bad') {
                 sparky.classList.add('anim-sleep');
                 document.getElementById('lostBtn').classList.add('pulse');
-                say("It's okay to be sad. I'm here.", 'anim-sleep');
+                say("Take a deep breath. I'm here.", 'anim-sleep');
             } else {
                 document.getElementById('lostBtn').classList.remove('pulse');
-                say("Looking good today!", '');
+                say("Good to see you!", '');
             }
+        }
+
+        function closePopup() {
+            const t = document.getElementById('moodInput').value;
+            if(t) fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=Mood_Thought: ${t}`);
+            document.getElementById('moodModal').style.display='none';
         }
 
         function toggleLost() {
             const msg = document.getElementById('comfortMsg');
             const btn = document.getElementById('lostBtn');
-            if (msg.style.display === 'block') {
-                msg.style.display = 'none';
-                btn.innerText = "If you're lost...";
-            } else {
-                msg.style.display = 'block';
-                btn.innerText = "Close Guidance";
-            }
+            const isVisible = msg.style.display === 'block';
+            msg.style.display = isVisible ? 'none' : 'block';
+            btn.innerText = isVisible ? "If you're lost..." : "Close Guidance";
         }
 
-        // --- UPDATED LIBRARY SYSTEM (5000+ BOOKS) ---
+        // --- Library Logic ---
         const allBooks = [];
-        const genres = ["Mystery", "Thriller", "Classic", "Science Fiction", "History", "Poetry", "Philosophy", "Bangla Literature"];
-        const authors = ["Humayun Ahmed", "Satyajit Ray", "Rabindranath Tagore", "Kazi Nazrul Islam", "James Clear", "Paulo Coelho", "J.K. Rowling", "George Orwell", "Mark Manson", "Stephen King"];
-        
-        // Initial popular books
-        const initialBooks = [
+        const authors = ["Humayun Ahmed", "Satyajit Ray", "Rabindranath Tagore", "Kazi Nazrul Islam", "James Clear", "Paulo Coelho", "J.K. Rowling", "George Orwell"];
+        const starters = [
             {t:"Atomic Habits", a:"James Clear"}, {t:"The Alchemist", a:"Paulo Coelho"},
-            {t:"হিমু সমগ্র", a:"হুমায়ূন আহমেদ"}, {t:"ফেলুদা সমগ্র", a:"সত্যজিৎ রায়"},
-            {t:"Harry Potter", a:"J.K. Rowling"}, {t:"শেষের কবিতা", a:"রবীন্দ্রনাথ ঠাকুর"},
-            {t:"1984", a:"George Orwell"}, {t:"The Subtle Art", a:"Mark Manson"},
-            {t:"পদ্মা নদীর মাঝি", a:"মানিক বন্দ্যোপাধ্যায়"}, {t:"পথের পাঁচালী", a:"বিভূতিভূষণ বন্দ্যোপাধ্যায়"}
+            {t:"Himu Somogro", a:"Humayun Ahmed"}, {t:"Feluda Somogro", a:"Satyajit Ray"},
+            {t:"Harry Potter", a:"J.K. Rowling"}, {t:"Shesher Kobita", a:"Rabindranath Tagore"},
+            {t:"1984", a:"George Orwell"}, {t:"Misir Ali", a:"Humayun Ahmed"}
         ];
 
-        // Generate 5000 mock books to populate the system
-        function generateLibrary() {
-            allBooks.push(...initialBooks);
-            for(let i=1; i<=5000; i++) {
-                const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-                const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+        function initLibrary() {
+            allBooks.push(...starters);
+            for(let i=1; i<=4992; i++) {
                 allBooks.push({
-                    t: `${randomGenre} Collection Vol ${i}`, 
-                    a: randomAuthor
+                    t: `Classic Volume ${i}`, 
+                    a: authors[Math.floor(Math.random() * authors.length)]
                 });
             }
         }
-        generateLibrary();
+        initLibrary();
 
         let limit = 8;
         function renderBooks() {
@@ -406,25 +399,23 @@
             const filtered = allBooks.filter(b => b.t.toLowerCase().includes(query) || b.a.toLowerCase().includes(query));
             
             filtered.slice(0, limit).forEach(b => {
-                // Generates a search link on Archive.org or Google for real reading experience
-                const readLink = `https://archive.org/search.php?query=${encodeURIComponent(b.t + " " + b.a)}`;
+                const link = `https://archive.org/search.php?query=${encodeURIComponent(b.t + " " + b.a)}`;
                 grid.innerHTML += `
                     <div class="book-card">
                         <div>
                             <p class="book-title">${b.t}</p>
                             <p class="book-author">by ${b.a}</p>
                         </div>
-                        <a href="${readLink}" target="_blank" class="read-btn">Read Online</a>
+                        <a href="${link}" target="_blank" class="read-btn">Read Online</a>
                     </div>`;
             });
             document.getElementById('loadMoreBtn').style.display = limit >= filtered.length ? 'none' : 'inline-block';
         }
-
-        function loadMore() { limit += 12; renderBooks(); }
+        function loadMore() { limit += 10; renderBooks(); }
         function searchBooks() { limit = 8; renderBooks(); }
         renderBooks();
 
-        // Tool Logic
+        // --- Utility Hub Logic ---
         function openTool(id, btn) {
             document.querySelectorAll('.tool-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tool-nav-btn').forEach(b => b.classList.remove('active'));
@@ -433,43 +424,60 @@
         }
 
         function advAge() {
-            const dob = new Date(document.getElementById('birthDate').value);
+            const dobValue = document.getElementById('birthDate').value;
+            if(!dobValue) return;
+            const dob = new Date(dobValue);
             const now = new Date();
             let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let days = now.getDate() - dob.getDate();
+
+            if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
+
             const res = document.getElementById('ageRes');
-            res.style.display = 'block'; res.innerHTML = `📅 <b>Age:</b> ${years} Years`;
+            res.style.display = 'block'; 
+            res.innerHTML = `📅 <b>Age:</b> ${years}Y, ${months}M, ${days}D`;
         }
 
         function advBMI() {
             const w = parseFloat(document.getElementById('weight').value);
             const h = parseFloat(document.getElementById('height').value) / 100;
             if(w && h) {
+                const bmi = (w/(h*h)).toFixed(1);
+                let cat = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal" : "Overweight";
                 const res = document.getElementById('bmiRes');
-                res.style.display = 'block'; res.innerHTML = `⚖️ <b>BMI Score:</b> ${(w/(h*h)).toFixed(1)}`;
+                res.style.display = 'block'; 
+                res.innerHTML = `⚖️ <b>BMI:</b> ${bmi} (${cat})`;
             }
         }
 
         function advUnit() {
             const val = parseFloat(document.getElementById('unitInput').value);
+            if(isNaN(val)) return;
             const type = document.getElementById('unitType').value;
-            let result = type === 'len' ? (val * 0.621).toFixed(2) + " Miles" : val;
+            let result = "";
+            if(type === 'km_m') result = (val * 0.621371).toFixed(2) + " Miles";
+            if(type === 'kg_lb') result = (val * 2.20462).toFixed(2) + " Lbs";
+            if(type === 'c_f') result = ((val * 9/5) + 32).toFixed(1) + " °F";
+            if(type === 'ft_m') result = (val * 0.3048).toFixed(2) + " Meters";
+            
             const res = document.getElementById('unitRes');
-            res.style.display = 'block'; res.innerHTML = `🔄 <b>Result:</b> ${result}`;
-        }
-
-        function advPass() {
-            const p = document.getElementById('passInput').value;
-            const res = document.getElementById('passRes');
-            res.style.display = 'block'; res.innerHTML = `🔐 <b>Strength:</b> ${p.length > 8 ? 'Strong' : 'Weak'}`;
+            res.style.display = 'block'; 
+            res.innerHTML = `🔄 <b>Result:</b> ${result}`;
         }
 
         function genPass() {
-            const pass = Math.random().toString(36).slice(-10);
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+            let pass = "";
+            for(let i=0; i<12; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
             document.getElementById('passInput').value = pass;
-            advPass();
+            navigator.clipboard.writeText(pass);
+            const res = document.getElementById('passRes');
+            res.style.display = 'block'; res.innerHTML = `🔐 Copied to clipboard!`;
         }
 
-        // --- Voice Studio (AutoTune) Logic ---
+        // --- Voice Logic ---
         function startTune() {
             document.getElementById('playRecordBtn').style.display = 'none';
             navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -479,7 +487,6 @@
                 analyser.fftSize = 2048;
                 buffer = new Float32Array(analyser.fftSize);
                 mic.connect(analyser);
-                
                 mediaRecorder = new MediaRecorder(stream);
                 chunks = [];
                 mediaRecorder.ondataavailable = e => chunks.push(e.data);
@@ -488,95 +495,53 @@
                     audioUrl = URL.createObjectURL(audioBlob);
                     document.getElementById('playRecordBtn').style.display = 'block';
                 };
-                
                 mediaRecorder.start();
-                showTuneResult("🎧 শুনছি ও রেকর্ড করছি... / Listening & Recording…");
+                showTuneResult("🎧 Listening & Recording...");
                 listen();
-            }).catch(err => showTuneResult("❌ Microphone access denied!"));
-        }
-
-        function stopTune() {
-            if(raf) cancelAnimationFrame(raf);
-            if(audioCtx) audioCtx.close();
-            if(mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-            showTuneResult("⏹️ বিশ্লেষণ বন্ধ। আপনি চাইলে আপনার রেকর্ড শুনতে পারেন।");
-        }
-
-        function playTune() {
-            if(audioUrl) {
-                const audio = new Audio(audioUrl);
-                audio.play();
-                showTuneResult("🔊 আপনার রেকর্ডটি প্লে হচ্ছে...");
-                audio.onended = () => showTuneResult("✅ প্লেব্যাক শেষ।");
-            }
+            }).catch(() => showTuneResult("❌ Mic Access Denied!"));
         }
 
         function listen() {
             analyser.getFloatTimeDomainData(buffer);
-            const pitch = detectPitch(buffer, audioCtx.sampleRate);
-            if (pitch > 0) {
-                smoothPitch = smoothPitch === 0 ? pitch : smoothPitch * 0.8 + pitch * 0.2;
-                const noteData = getNoteData(smoothPitch);
-                const feedback = getTuneFeedback(noteData.cents);
-                showTuneResult(`
-                    🎼 <b>Pitch:</b> ${smoothPitch.toFixed(1)} Hz<br>
-                    🎹 <b>Note:</b> ${noteData.note}<br>
-                    📐 <b>Tuning:</b> ${noteData.cents} cents<br>
-                    💬 <b>Feedback:</b> ${feedback}
-                `);
+            let sum = 0; for(let i=0; i<buffer.length; i++) sum += buffer[i]*buffer[i];
+            let rms = Math.sqrt(sum/buffer.length);
+            if(rms > 0.01) {
+                showTuneResult(`🎤 Sound Level: ${Math.round(rms*100)}% <br> Voice activity detected...`);
             }
             raf = requestAnimationFrame(listen);
         }
 
-        function detectPitch(buf, rate) {
-            let bestOffset = -1, bestCorr = 0;
-            for (let offset = 20; offset < 1000; offset++) {
-                let corr = 0;
-                for (let i = 0; i < buf.length - offset; i++) {
-                    corr += buf[i] * buf[i + offset];
-                }
-                if (corr > bestCorr) { bestCorr = corr; bestOffset = offset; }
-            }
-            return bestOffset > 0 ? rate / bestOffset : -1;
+        function stopTune() {
+            cancelAnimationFrame(raf);
+            if(audioCtx) audioCtx.close();
+            if(mediaRecorder) mediaRecorder.stop();
+            showTuneResult("⏹️ Recording stopped.");
         }
 
-        function getNoteData(freq) {
-            const notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-            const noteNum = 12 * Math.log2(freq / 440);
-            const midi = Math.round(noteNum) + 69;
-            const note = notes[midi % 12];
-            const cents = Math.round((noteNum - Math.round(noteNum)) * 100);
-            return { note, cents };
+        function playTune() {
+            if(audioUrl) new Audio(audioUrl).play();
         }
 
-        function getTuneFeedback(cents) {
-            if (Math.abs(cents) < 10) return "Perfect pitch 🎯";
-            if (cents > 0) return "Slightly sharp";
-            return "A bit flat";
+        function showTuneResult(h) {
+            const b = document.getElementById("tuneRes"); b.style.display = "block"; b.innerHTML = h;
         }
 
-        function showTuneResult(html) {
-            const box = document.getElementById("tuneRes");
-            box.style.display = "block"; box.innerHTML = html;
-        }
-
-        // Popup & Telegram
-        window.onload = () => { setTimeout(() => { document.getElementById('moodModal').style.display='flex'; }, 1000); };
-        
-        function closePopup() {
-            const t = document.getElementById('moodInput').value;
-            if(t) fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=Mood Thought: ${t}`);
-            document.getElementById('moodModal').style.display='none';
-        }
-
+        // --- General ---
         function postMsg() {
             const n = document.getElementById('usrName').value;
             const m = document.getElementById('usrText').value;
             if(n && m) {
-                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=By ${n}: ${m}`);
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=New_Spark! From ${n}: ${m}`);
                 document.getElementById('msgConfirm').style.display = 'block';
+                document.getElementById('usrName').value = "";
+                document.getElementById('usrText').value = "";
+                setTimeout(() => { document.getElementById('msgConfirm').style.display = 'none'; }, 3000);
             }
         }
+
+        window.onload = () => { 
+            setTimeout(() => { document.getElementById('moodModal').style.display='flex'; }, 800); 
+        };
     </script>
 </body>
 </html>
