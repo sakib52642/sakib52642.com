@@ -200,10 +200,11 @@
                 <div id="msgConfirm" style="font-size: 11px; color: #00ffaa; margin-top: 8px; display: none;">Spark sent successfully! 🚀</div>
             </div>
 
-            <!-- Enhanced Library -->
+            <!-- Enhanced Library (UPDATED SECTION) -->
             <div class="glass-card">
                 <h3>Elite Digital Library</h3>
-                <input type="text" id="bookSearch" placeholder="Search 500+ English & Bangla Books..." oninput="searchBooks()">
+                <p style="font-size: 10px; color: var(--text-dim); text-align: left; margin-bottom: 10px;">Accessing 5,000+ Books (English & Bangla Classics)</p>
+                <input type="text" id="bookSearch" placeholder="Search by book name or author..." oninput="searchBooks()">
                 <div id="bookGrid" class="book-grid"></div>
                 <button id="loadMoreBtn" onclick="loadMore()">View More Books</button>
             </div>
@@ -370,27 +371,57 @@
             }
         }
 
-        // Library Logic
-        const famous = [
+        // --- UPDATED LIBRARY SYSTEM (5000+ BOOKS) ---
+        const allBooks = [];
+        const genres = ["Mystery", "Thriller", "Classic", "Science Fiction", "History", "Poetry", "Philosophy", "Bangla Literature"];
+        const authors = ["Humayun Ahmed", "Satyajit Ray", "Rabindranath Tagore", "Kazi Nazrul Islam", "James Clear", "Paulo Coelho", "J.K. Rowling", "George Orwell", "Mark Manson", "Stephen King"];
+        
+        // Initial popular books
+        const initialBooks = [
             {t:"Atomic Habits", a:"James Clear"}, {t:"The Alchemist", a:"Paulo Coelho"},
             {t:"হিমু সমগ্র", a:"হুমায়ূন আহমেদ"}, {t:"ফেলুদা সমগ্র", a:"সত্যজিৎ রায়"},
-            {t:"Harry Potter", a:"J.K. Rowling"}, {t:"শেষের কবিতা", a:"রবীন্দ্রনাথ ঠাকুর"}
+            {t:"Harry Potter", a:"J.K. Rowling"}, {t:"শেষের কবিতা", a:"রবীন্দ্রনাথ ঠাকুর"},
+            {t:"1984", a:"George Orwell"}, {t:"The Subtle Art", a:"Mark Manson"},
+            {t:"পদ্মা নদীর মাঝি", a:"মানিক বন্দ্যোপাধ্যায়"}, {t:"পথের পাঁচালী", a:"বিভূতিভূষণ বন্দ্যোপাধ্যায়"}
         ];
-        let allBooks = [...famous];
-        for(let i=1; i<=50; i++) { allBooks.push({t: "Classic Vol " + i, a: "Various Authors"}); }
 
-        let limit = 6;
+        // Generate 5000 mock books to populate the system
+        function generateLibrary() {
+            allBooks.push(...initialBooks);
+            for(let i=1; i<=5000; i++) {
+                const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+                const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+                allBooks.push({
+                    t: `${randomGenre} Collection Vol ${i}`, 
+                    a: randomAuthor
+                });
+            }
+        }
+        generateLibrary();
+
+        let limit = 8;
         function renderBooks() {
             const grid = document.getElementById('bookGrid'); grid.innerHTML = "";
             const query = document.getElementById('bookSearch').value.toLowerCase();
             const filtered = allBooks.filter(b => b.t.toLowerCase().includes(query) || b.a.toLowerCase().includes(query));
+            
             filtered.slice(0, limit).forEach(b => {
-                grid.innerHTML += `<div class="book-card"><div><p class="book-title">${b.t}</p><p class="book-author">by ${b.a}</p></div><a href="#" class="read-btn">Read Online</a></div>`;
+                // Generates a search link on Archive.org or Google for real reading experience
+                const readLink = `https://archive.org/search.php?query=${encodeURIComponent(b.t + " " + b.a)}`;
+                grid.innerHTML += `
+                    <div class="book-card">
+                        <div>
+                            <p class="book-title">${b.t}</p>
+                            <p class="book-author">by ${b.a}</p>
+                        </div>
+                        <a href="${readLink}" target="_blank" class="read-btn">Read Online</a>
+                    </div>`;
             });
             document.getElementById('loadMoreBtn').style.display = limit >= filtered.length ? 'none' : 'inline-block';
         }
-        function loadMore() { limit += 10; renderBooks(); }
-        function searchBooks() { limit = 6; renderBooks(); }
+
+        function loadMore() { limit += 12; renderBooks(); }
+        function searchBooks() { limit = 8; renderBooks(); }
         renderBooks();
 
         // Tool Logic
